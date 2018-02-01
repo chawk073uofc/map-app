@@ -8,6 +8,7 @@ class Restaurant{
 
 //for testing
 let hardCodedRestaurantList = [new Restaurant('Scooners', 1, 1), new Restaurant("CPL", 2, 2)];
+let map;
 
 function RestaurantListViewModel() {
     let self = this;
@@ -26,4 +27,12 @@ function init() {
 
     //get restaurants from Yelp Fusion API
 }
+
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 51.0601364, lng: -114.1827787},
+        zoom: 15
+    });
+}
+
 ko.applyBindings(new RestaurantListViewModel());

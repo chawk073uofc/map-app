@@ -7,8 +7,11 @@
     <link href='css/styles.css' rel='stylesheet'> <!--TODO: minify-->
 </head>
 <body>
-
-
+<h1>Coach Hill and Surrounding Area Restaurants</h1>
+<input data-bind="searchTerm">
+<ul data-bind="foreach: restaurants">
+    <li><span data-bind="text: name"></span></li>
+</ul>
 
 
 <script src="lib/knockout-3.4.2.js"></script> <!--TODO: use cdn-->

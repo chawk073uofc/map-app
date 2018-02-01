@@ -17,4 +17,12 @@ function RestaurantListViewModel() {
     self.filterRestaurants = function() {};
 }
 
+/**
+ * Initialize the web app by getting a map of the neighbourhood and a list of restaurants in that
+ * neighbourhood using Google and Yelp API calls.
+ */
+function init() {
+    //get map form Google maps API
+    //get restaurants from Yelp Fusion API
+}
 ko.applyBindings(new RestaurantListViewModel());

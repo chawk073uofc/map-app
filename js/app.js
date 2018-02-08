@@ -1,3 +1,6 @@
+const YELP_API_KEY = 'G3sTa-Thyp2ZuyHfMaLGrnUqrBFuri05MZ7VyaUiZPDB2A7SDLvU_Y0EiL_-ZEr0kAU02HkQ4RiXFIsQfQ1gipsK-IjPWV1WG4KzqHrrA4O98mQ61dZUQYbYaYRyWnYx';
+//const yelp = require('yelp-fusion');
+
 class Restaurant{
     constructor(name, long, lat) {
         this.name = name;
@@ -8,7 +11,9 @@ class Restaurant{
 
 //for testing
 let hardCodedRestaurantList = [new Restaurant('Scooners', 1, 1), new Restaurant("CPL", 2, 2)];
-let map;
+var map;
+
+init();
 
 function RestaurantListViewModel() {
     let self = this;
@@ -26,6 +31,14 @@ function init() {
     //get map form Google maps API
 
     //get restaurants from Yelp Fusion API
+    fetch("https://api.yelp.com/v3/businesses/search", {
+        credentials: YELP_API_KEY
+    }).then(function(response) {
+        return response.json();
+    }).then(function(restaurantsJSON) {
+        //RestaurantListViewModel.restaurants = restaurantsJSON;
+        console.log(restaurantsJSON);
+    });
 }
 
 function initMap() {

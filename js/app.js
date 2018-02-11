@@ -31,9 +31,13 @@ function init() {
     //get map form Google maps API
 
     //get restaurants from Yelp Fusion API
-    fetch("https://api.yelp.com/v3/businesses/search", {
-        credentials: YELP_API_KEY
-    }).then(function(response) {
+    let yelpReqHeaders = new Headers();
+    yelpReqHeaders.append('Authorization', YELP_API_KEY);
+
+    let yelpReqConfig ={headers: yelpReqHeaders, credentials: 'include', mode: 'cors'};//todo try cors, navigate, same-origin
+
+    fetch("https://api.yelp.com/v3/businesses/search?term=delis&latitude=37.786882&longitude=-122.399972", yelpReqConfig) //todo add params
+        .then(function(response) {
         return response.json();
     }).then(function(restaurantsJSON) {
         //RestaurantListViewModel.restaurants = restaurantsJSON;

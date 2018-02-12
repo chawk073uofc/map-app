@@ -32,6 +32,7 @@ function init() {
 
     //get restaurants from Yelp Fusion API
 
+
     'use strict';
 
     const yelp = require('yelp-fusion');

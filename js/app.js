@@ -1,5 +1,3 @@
-const YELP_API_KEY = 'G3sTa-Thyp2ZuyHfMaLGrnUqrBFuri05MZ7VyaUiZPDB2A7SDLvU_Y0EiL_-ZEr0kAU02HkQ4RiXFIsQfQ1gipsK-IjPWV1WG4KzqHrrA4O98mQ61dZUQYbYaYRyWnYx';
-//const yelp = require('yelp-fusion');
 
 class Restaurant{
     constructor(name, long, lat) {
@@ -33,39 +31,7 @@ function init() {
     //get restaurants from Yelp Fusion API
 
 
-    'use strict';
 
-    const yelp = require('yelp-fusion');
-
-    const apiKey = 'G3sTa-Thyp2ZuyHfMaLGrnUqrBFuri05MZ7VyaUiZPDB2A7SDLvU_Y0EiL_-ZEr0kAU02HkQ4RiXFIsQfQ1gipsK-IjPWV1WG4KzqHrrA4O98mQ61dZUQYbYaYRyWnYx';
-
-    const searchRequest = {
-        term:'Mucho Burito',
-        location: 'san francisco, ca'
-    };
-
-    const client = yelp.client(apiKey);
-
-    client.search(searchRequest).then(response => {
-        const firstResult = response.jsonBody.businesses[0];
-        const prettyJson = JSON.stringify(firstResult, null, 4);
-        console.log(prettyJson);
-    }).catch(e => {
-        console.log(e);
-    });
-
-    // let yelpReqHeaders = new Headers();
-    // yelpReqHeaders.append('Authorization', YELP_API_KEY);
-    //
-    // let yelpReqConfig ={headers: yelpReqHeaders, credentials: 'include', mode: 'cors'};//todo try cors, navigate, same-origin
-    //
-    // fetch("https://api.yelp.com/v3/businesses/search?term=delis&latitude=37.786882&longitude=-122.399972", yelpReqConfig) //todo add params
-    //     .then(function(response) {
-    //     return response.json();
-    // }).then(function(restaurantsJSON) {
-    //     //RestaurantListViewModel.restaurants = restaurantsJSON;
-    //     console.log(restaurantsJSON);
-    // });
 }
 
 function initMap() {

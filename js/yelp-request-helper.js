@@ -1,23 +1,41 @@
 'use strict';
 
-const yelp = require('yelp-fusion');
-//import yelp from "yelp-fusion";
+// Taken form https://nodejs.org/en/docs/guides/getting-started-guide/
+const http = require('http');
 
-// Place holder for Yelp Fusion's API Key. Grab them
-// from https://www.yelp.com/developers/v3/manage_app
+const hostname = 'localhost';
+const port = 3000;
+
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello World\n');
+});
+
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+
+const yelp = require('yelp-fusion');
+
 const apiKey = 'G3sTa-Thyp2ZuyHfMaLGrnUqrBFuri05MZ7VyaUiZPDB2A7SDLvU_Y0EiL_-ZEr0kAU02HkQ4RiXFIsQfQ1gipsK-IjPWV1WG4KzqHrrA4O98mQ61dZUQYbYaYRyWnYx';
 
 const searchRequest = {
-  term:'Mucho Burito',
-  location: 'san francisco, ca'
+  //latitude: 51.0601364,
+    //longitude: -114.1827787,
+  term:'food',
+  location: 'T3H1V8'
 };
 
 const client = yelp.client(apiKey);
 
 client.search(searchRequest).then(response => {
-  const firstResult = response.jsonBody.businesses[0];
-  const prettyJson = JSON.stringify(firstResult, null, 4);
-  console.log(prettyJson);
+const restaurants = response.jsonBody.businesses;
+restaurants.forEach(restaurant => )
+  //const firstResult = response.jsonBody.businesses[0];
+ // const prettyJson = JSON.stringify(firstResult, null, 4);
+ // console.log(prettyJson);
 }).catch(e => {
   console.log(e);
 });

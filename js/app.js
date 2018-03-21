@@ -8,6 +8,7 @@ class Restaurant{
 }
 
 //for testing
+let testList;
 let hardCodedRestaurantList = [new Restaurant('Scooners', 1, 1), new Restaurant("CPL", 2, 2)];
 var map;
 
@@ -27,10 +28,18 @@ function RestaurantListViewModel() {
  */
 function init() {
     //get map form Google maps API
+    //start the server
 
-    //get restaurants from Yelp Fusion API
-
-
+    //get restaurants from Yelp via server
+    let restaurantData;
+    fetch('http://localhost:3000/').then(response => {
+        return response.json;
+        // restaurantData = response;
+        // console.log(restaurantData);
+    }).then(json => {
+        console.log(json.toString());
+    });
+    //console.log(restaurantData);
 
 }
 

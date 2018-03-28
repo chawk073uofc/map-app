@@ -12,9 +12,10 @@ const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'text/plain');
     res.setHeader('Access-Control-Allow-Origin', '*');
     //console.log(getRestaurantData());
-    restaurantData.forEach(restaurant => console.log(restaurant.id));
+    //restaurantData.forEach(restaurant => console.log(restaurant.id));
 
     //res.write('returned from node');
+   // console.log(restaurantData);
     res.end(restaurantData.toString());
 });
 
@@ -32,10 +33,10 @@ function getRestaurantData()
     };
     const client = yelp.client(apiKey);
     client.search(searchRequest).then(response => {
-        restaurantData = response.jsonBody.businesses;
+        restaurantData = response;//.jsonBody.businesses;
 
         //test
-        //restaurantData.forEach(restaurant => console.log(restaurant.id));
+        restaurantData.jsonBody.businesses.forEach(restaurant => console.log(restaurant.id));
     }).catch(e => {
         console.log(e);
     });

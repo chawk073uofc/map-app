@@ -31,13 +31,17 @@ function init() {
     //start the server
 
     //get restaurants from Yelp via server
-    let restaurantData;
+    //let restaurantData;
     fetch('http://localhost:3000/').then(response => {
-        return response.json;
+        return response.blob();//.json.toString();
         // restaurantData = response;
         // console.log(restaurantData);
-    }).then(json => {
-        console.log(json.toString());
+    }).then(blob => {
+        let reader = new FileReader();
+        reader.readAsText(blob);
+        let restaurantData = reader.result;
+        console.log(restaurantData);
+        restaurantData.jsonBody.businesses.forEach(restaurant => console.log(restaurant.id));
     });
     //console.log(restaurantData);
 

@@ -33,14 +33,11 @@ function getRestaurantData()
     };
     const client = yelp.client(apiKey);
     client.search(searchRequest).then(response => {
-        restaurantData = response;//.jsonBody.businesses;
+        restaurantData = response.jsonBody.businesses;
 
         //test
-        restaurantData.jsonBody.businesses.forEach(restaurant => console.log(restaurant.id));
+        restaurantData.forEach(restaurant => console.log(restaurant.name));
     }).catch(e => {
         console.log(e);
     });
-
-
-
 }

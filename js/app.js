@@ -1,15 +1,20 @@
 
 class Restaurant{
-    constructor(name, long, lat) {
+    constructor(name, lat, long) {
         this.name = name;
-        this.long = long;
         this.lat = lat;
+        this.long = long;
     }
 }
 
-//for testing
 let testList;
-let hardCodedRestaurantList = [new Restaurant('Scooners', 1, 1), new Restaurant("CPL", 2, 2)];
+let hardCodedRestaurantList = [
+    new Restaurant('Treasures of Saigon', 51.060816, -114.179903),
+    new Restaurant('Cafe MoMoKo', 51.063519, -114.194769),
+    new Restaurant('A&W', 51.066708, -114.216300),
+    new Restaurant('Diner Delux Aspen', 51.039878, -114.209179),
+    new Restaurant('Edo Japan', 51.041403, -114.210483)
+    ];
 var map;
 
 init();

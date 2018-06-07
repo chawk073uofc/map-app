@@ -5,7 +5,7 @@ class Restaurant{
         this.lng = lng;
     }
 }
-let hardCodedRestaurantList = [
+let restaurantList = [
     new Restaurant('Treasures of Saigon', 51.060816, -114.179903),
     new Restaurant('Cafe MoMoKo', 51.063519, -114.194769),
     new Restaurant('A&W', 51.066708, -114.216300),
@@ -18,7 +18,7 @@ function RestaurantListViewModel() {
     let self = this;
 
     self.searchTerm; //text entered by user for filter list
-    self.restaurants = hardCodedRestaurantList;
+    self.restaurants = restaurantList;
     self.filterRestaurants = function() {};
 }
 
@@ -28,7 +28,7 @@ function initMap() {
         zoom: 15
     });
     //Add a marker for each restaurant
-    hardCodedRestaurantList.forEach(restaurant => {
+    restaurantList.forEach(restaurant => {
         let marker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
     });
 }

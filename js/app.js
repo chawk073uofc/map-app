@@ -1,4 +1,3 @@
-
 class Restaurant{
     constructor(name, lat, lng) {
         this.name = name;
@@ -6,8 +5,6 @@ class Restaurant{
         this.lng = lng;
     }
 }
-
-let testList;
 let hardCodedRestaurantList = [
     new Restaurant('Treasures of Saigon', 51.060816, -114.179903),
     new Restaurant('Cafe MoMoKo', 51.063519, -114.194769),
@@ -17,8 +14,6 @@ let hardCodedRestaurantList = [
     ];
 var map;
 
-//init();
-
 function RestaurantListViewModel() {
     let self = this;
 
@@ -26,31 +21,6 @@ function RestaurantListViewModel() {
     self.restaurants = hardCodedRestaurantList;
     self.filterRestaurants = function() {};
 }
-
-/**
- * Initialize the app by getting a map of the neighbourhood and a list of restaurants in that
- * neighbourhood using Google and Yelp API calls.
- */
-// function init() {
-//     //get map form Google maps API
-//     //start the server
-//
-//     //get restaurants from Yelp via server
-//     //let restaurantData;
-//     fetch('http://localhost:3000/').then(response => {
-//         return response.blob();//.json.toString();
-//         // restaurantData = response;
-//         // console.log(restaurantData);
-//     }).then(blob => {
-//         let reader = new FileReader();
-//         reader.readAsText(blob);
-//         let restaurantData = reader.result;
-//         console.log(restaurantData);
-//         restaurantData.jsonBody.businesses.forEach(restaurant => console.log(restaurant.id));
-//     });
-//     //console.log(restaurantData);
-//
-// }
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {

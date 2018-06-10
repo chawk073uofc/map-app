@@ -22,6 +22,9 @@ function RestaurantListViewModel() {
     self.filterRestaurants = function() {};
 }
 
+let fsID = SFCIUOIIWV2VCYEHDNZJM2YZBDFKB0TIMPUNNL5ILGYLU1AQ;
+let fsSecret = OYLZC4ZLIAK2E1MHEJ0C5ETO1Y0EJKCOYRECPLY4RFYD2L42;
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 51.052731, lng: -114.196777},

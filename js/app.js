@@ -24,8 +24,8 @@ function RestaurantListViewModel() {
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 51.0601364, lng: -114.1827787},
-        zoom: 15
+        center: {lat: 51.052731, lng: -114.196777},
+        zoom: 14
     });
     //Add a marker for each restaurant
     restaurantList.forEach(restaurant => {

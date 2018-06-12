@@ -1,16 +1,17 @@
 class Restaurant{
-    constructor(name, lat, lng) {
+    constructor(name, lat, lng, fsID) {
         this.name = name;
         this.lat = lat;
         this.lng = lng;
+        this.fsID = fsID;
     }
 }
 let restaurantList = [
-    new Restaurant('Treasures of Saigon', 51.060816, -114.179903),
-    new Restaurant('Cafe MoMoKo', 51.063519, -114.194769),
-    new Restaurant('A&W', 51.066708, -114.216300),
-    new Restaurant('Diner Delux Aspen', 51.039878, -114.209179),
-    new Restaurant('Edo Japan', 51.041403, -114.210483)
+    new Restaurant('Treasures of Saigon', 51.060816, -114.179903, '4b6cce3cf964a520b3552ce3'),
+    new Restaurant('Cafe MoMoKo', 51.063519, -114.194769, '4b6b7cacf964a520e50b2ce3'),
+    new Restaurant('A&W', 51.066708, -114.216300, '54b1e0a7498e03abcc3fcbe4'),
+    new Restaurant('Diner Delux Aspen', 51.039878, -114.209179, '5393e8ae498e14bd1c94c3df'),
+    new Restaurant('Edo Japan', 51.041403, -114.210483, '4ba690e8f964a520e45e39e3')
     ];
 var map;
 

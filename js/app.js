@@ -4,6 +4,7 @@ class Restaurant{
         this.lat = lat;
         this.lng = lng;
         this.fsID = fsID;
+        this.fsPhoto = null;
     }
 }
 let restaurantList = [
@@ -13,6 +14,8 @@ let restaurantList = [
     new Restaurant('Diner Delux Aspen', 51.039878, -114.209179, '5393e8ae498e14bd1c94c3df'),
     new Restaurant('Edo Japan', 51.041403, -114.210483, '4ba690e8f964a520e45e39e3')
     ];
+
+
 var map;
 
 function RestaurantListViewModel() {
@@ -23,8 +26,6 @@ function RestaurantListViewModel() {
     self.filterRestaurants = function() {};
 }
 
-let fsID = 'SFCIUOIIWV2VCYEHDNZJM2YZBDFKB0TIMPUNNL5ILGYLU1AQ';
-let fsSecret = 'OYLZC4ZLIAK2E1MHEJ0C5ETO1Y0EJKCOYRECPLY4RFYD2L42';
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -37,4 +38,34 @@ function initMap() {
     });
 }
 
+function getFourSquarePhotos(restaurantList) {
+
+    let fsEndPoint = 'https://api.foursquare.com/v2/venues/';
+    let fsClientID = 'client_id=SFCIUOIIWV2VCYEHDNZJM2YZBDFKB0TIMPUNNL5ILGYLU1AQ';
+    let fsSecret = '&client_secret=OYLZC4ZLIAK2E1MHEJ0C5ETO1Y0EJKCOYRECPLY4RFYD2L42';
+    let fsVersionID = '&v=20161507';
+
+    restaurantList.forEach(restaurant => {
+        const fsVenueID = restaurant.fsID + '/?';
+        console.log(fsVenueID);
+
+        let fsURL = fsEndPoint + fsVenueID + fsClientID + fsSecret + fsVersionID;
+
+        // AJAX call to Foursquare
+        $.ajax({
+            type: "GET",
+            url: fsURL,
+            dataType: "json",
+            cache: false,
+            success: function(data) {
+                var response = data.response ? data.response : "";
+                var venue = response.venue ? data.venue : "";
+                restaurant.fsPhoto = response.venue.bestPhoto["prefix"] + "height150" +
+                    response.venue.bestPhoto["suffix"];
+            }
+        });
+
+    });
+}
+getFourSquarePhotos(restaurantList);
 ko.applyBindings(new RestaurantListViewModel());

@@ -35,6 +35,7 @@ function initMap() {
     //Add a marker for each restaurant
     restaurantList.forEach(restaurant => {
         let marker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
+        marker.onclick = showFourSquarePhoto(restaurant, marker);
     });
 }
 
@@ -51,7 +52,6 @@ function getFourSquarePhotos(restaurantList) {
 
         let fsURL = fsEndPoint + fsVenueID + fsClientID + fsSecret + fsVersionID;
 
-        // AJAX call to Foursquare
         $.ajax({
             type: "GET",
             url: fsURL,
@@ -60,12 +60,16 @@ function getFourSquarePhotos(restaurantList) {
             success: function(data) {
                 var response = data.response ? data.response : "";
                 var venue = response.venue ? data.venue : "";
-                restaurant.fsPhoto = response.venue.bestPhoto["prefix"] + "height150" +
+                restaurant.fsPhoto = response.venue.bestPhoto["prefix"] + "height175" +
                     response.venue.bestPhoto["suffix"];
             }
         });
 
     });
+}
+
+function showFourSquarePhoto(restaurant, marker) {
+console.log('hi');
 }
 getFourSquarePhotos(restaurantList);
 ko.applyBindings(new RestaurantListViewModel());

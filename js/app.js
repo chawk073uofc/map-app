@@ -1,3 +1,8 @@
+//TODO: get FS photo URL retrevals working again
+// TODO:create KO observables:query string and selected restaurant(more than one selected and one time??)
+//TODO:put restaurant data in view model object
+//TODO: create KO bindings
+
 class Restaurant{
     constructor(name, lat, lng, fsID) {
         this.name = name;
@@ -5,6 +10,7 @@ class Restaurant{
         this.lng = lng;
         this.fsID = fsID;
         this.fsPhoto = null;
+    this.mapMarker = null;//plain by default, null if filtered out, marker with info window (photo) if clicked
     }
 }
 let restaurantList = [
@@ -35,7 +41,7 @@ function initMap() {
     //Add a marker for each restaurant
     restaurantList.forEach(restaurant => {
         let marker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
-        marker.onclick = showFourSquarePhoto(restaurant, marker);
+        //marker.onclick = showFourSquarePhoto(restaurant, marker);
     });
 }
 
@@ -60,7 +66,7 @@ function getFourSquarePhotos(restaurantList) {
             success: function(data) {
                 var response = data.response ? data.response : "";
                 var venue = response.venue ? data.venue : "";
-                restaurant.fsPhoto = response.venue.bestPhoto["prefix"] + "height175" +
+                restaurant.fsPhoto = response.venue.bestPhoto["prefix"] + "height150" +
                     response.venue.bestPhoto["suffix"];
             }
         });
@@ -69,7 +75,11 @@ function getFourSquarePhotos(restaurantList) {
 }
 
 function showFourSquarePhoto(restaurant, marker) {
-console.log('hi');
+    console.log('hi');
+    const img = document.createElement("<img src='https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'>");
+    //$(img).attr("src", restaurant.fsPhoto);
+    $( "body" ).append(img);
 }
+
 getFourSquarePhotos(restaurantList);
 ko.applyBindings(new RestaurantListViewModel());

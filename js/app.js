@@ -1,4 +1,3 @@
-//TODO: get FS photo URL retrevals working again
 // TODO:create KO observables:query string and selected restaurant(more than one selected and one time??)
 //TODO:put restaurant data in view model object
 //TODO: create KO bindings
@@ -16,7 +15,7 @@ class Restaurant{
 let restaurantList = [
     new Restaurant('Treasures of Saigon', 51.060816, -114.179903, '4b6cce3cf964a520b3552ce3'),
     new Restaurant('Cafe MoMoKo', 51.063519, -114.194769, '4b6b7cacf964a520e50b2ce3'),
-    new Restaurant('A&W', 51.066708, -114.216300, '54b1e0a7498e03abcc3fcbe4'),
+    new Restaurant('A Ladybug Bakery and Cafe', 51.04134019638049, -114.21250662761257, '4b0586e9f964a520937422e3'),
     new Restaurant('Diner Delux Aspen', 51.039878, -114.209179, '5393e8ae498e14bd1c94c3df'),
     new Restaurant('Edo Japan', 51.041403, -114.210483, '4ba690e8f964a520e45e39e3')
     ];
@@ -47,16 +46,14 @@ function initMap() {
 
 function getFourSquarePhotos(restaurantList) {
 
-    let fsEndPoint = 'https://api.foursquare.com/v2/venues/';
-    let fsClientID = 'client_id=SFCIUOIIWV2VCYEHDNZJM2YZBDFKB0TIMPUNNL5ILGYLU1AQ';
-    let fsSecret = '&client_secret=OYLZC4ZLIAK2E1MHEJ0C5ETO1Y0EJKCOYRECPLY4RFYD2L42';
-    let fsVersionID = '&v=20161507';
+    const fsEndPoint = 'https://api.foursquare.com/v2/venues/';
+    const fsClientID = 'client_id=SFCIUOIIWV2VCYEHDNZJM2YZBDFKB0TIMPUNNL5ILGYLU1AQ';
+    const fsSecret = '&client_secret=OYLZC4ZLIAK2E1MHEJ0C5ETO1Y0EJKCOYRECPLY4RFYD2L42';
+    const fsVersionID = '&v=20161507';
 
     restaurantList.forEach(restaurant => {
         const fsVenueID = restaurant.fsID + '/?';
-        console.log(fsVenueID);
-
-        let fsURL = fsEndPoint + fsVenueID + fsClientID + fsSecret + fsVersionID;
+        const fsURL = fsEndPoint + fsVenueID + fsClientID + fsSecret + fsVersionID;
 
         $.ajax({
             type: "GET",

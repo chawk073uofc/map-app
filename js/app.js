@@ -70,12 +70,5 @@ function getFourSquarePhotos(restaurantList) {
     });
 }
 
-function showFourSquarePhoto(restaurant, marker) {
-    console.log('hi');
-    const img = document.createElement("<img src='https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'>");
-    //$(img).attr("src", restaurant.fsPhoto);
-    $( "body" ).append(img);
-}
-
 getFourSquarePhotos(restaurantList);
 ko.applyBindings(new RestaurantListViewModel());

@@ -8,9 +8,9 @@ class Restaurant{
         this.lng = lng;
         this.fsID = fsID;
         this.fsPhoto = null;
-    this.mapMarker = null;//plain by default, null if filtered out, marker with info window (photo) if clicked
     }
 }
+
 let restaurantList = [
     new Restaurant('Treasures of Saigon', 51.060816, -114.179903, '4b6cce3cf964a520b3552ce3'),
     new Restaurant('Cafe MoMoKo', 51.063519, -114.194769, '4b6b7cacf964a520e50b2ce3'),

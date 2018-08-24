@@ -1,4 +1,3 @@
-// TODO:display restaurant photo and name in info window when map marker is clicked (non-ko)
 // TODO:create KO observables:query string and selected restaurant(more than one selected at one time??)
 
 class Restaurant{
@@ -31,15 +30,41 @@ function RestaurantListViewModel() {
 }
 
 
+function getInfoWindowContent(restaurant) {
+    let contentString = '<div id="content">' +
+        '<div id="siteNotice">' +
+        '</div>' +
+        '<h1 id="firstHeading" class="firstHeading">' + restaurant.name + '</h1>' +
+        '<div id="bodyContent">' +
+        '<p>' +
+        '<img src=\"' + restaurant.fsPhoto + '\" alt="Restaurant Photo" />' +
+        '</p>' +
+        '<p>Source: <a href="https://foursquare.com/">' +
+        'https://foursquare.com/</a>'+
+        '</p>' +
+        '</div>' +
+        '</div>';
+    return contentString;
+}
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 51.052731, lng: -114.196777},
         zoom: 14
     });
+
+    // let infowindow = new google.maps.InfoWindow({
+    //     content: contentString
+    // });
+
     //Add a marker for each restaurant
     restaurantList.forEach(restaurant => {
         let marker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
-        //marker.onclick = showFourSquarePhoto(restaurant, marker);
+        let infowindow = new google.maps.InfoWindow();
+        marker.addListener('click', function() {
+            infowindow.setContent(getInfoWindowContent(restaurant));
+            infowindow.open(map, marker);
+        });
     });
 }
 

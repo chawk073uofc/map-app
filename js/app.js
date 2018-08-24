@@ -1,4 +1,4 @@
-// TODO:create KO observables:query string and selected restaurant(more than one selected and one time??)
+// TODO:create KO observables:query string and selected restaurant(more than one selected at one time??)
 //TODO:put restaurant data in view model object
 //TODO: create KO bindings
 
@@ -61,7 +61,7 @@ function getFourSquarePhotos(restaurantList) {
             dataType: "json",
             cache: false,
             success: function(data) {
-                var response = data.response ? data.response : "";
+                let response = data.response ? data.response : "";
                 var venue = response.venue ? data.venue : "";
                 restaurant.fsPhoto = response.venue.bestPhoto["prefix"] + "height150" +
                     response.venue.bestPhoto["suffix"];

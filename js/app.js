@@ -1,6 +1,5 @@
+// TODO:display restaurant photo and name in info window when map marker is clicked (non-ko)
 // TODO:create KO observables:query string and selected restaurant(more than one selected at one time??)
-//TODO:put restaurant data in view model object
-//TODO: create KO bindings
 
 class Restaurant{
     constructor(name, lat, lng, fsID) {

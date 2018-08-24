@@ -1,3 +1,4 @@
+// TODO: restaurant list filtering with KO
 // TODO:create KO observables:query string and selected restaurant(more than one selected at one time??)
 
 class Restaurant{

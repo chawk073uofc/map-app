@@ -26,7 +26,7 @@ function RestaurantListViewModel() {
     let self = this;
 
     self.searchTerm = 'tada'; //text entered by user for filter list
-    self.restaurants = ko.observableArray(restaurantList);
+    self.selectedRestaurants = ko.observableArray(restaurantList);
     self.filterRestaurants = function() {};
 }
 
@@ -94,3 +94,4 @@ function getFourSquarePhotos(restaurantList) {
 
 getFourSquarePhotos(restaurantList);
 ko.applyBindings(new RestaurantListViewModel());
+console.log(RestaurantListViewModel.prototype.searchTerm);

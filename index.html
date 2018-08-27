@@ -9,10 +9,10 @@
 </head>
 <body>
 
-<div class="restaurants">
+<div class="selectedRestaurants">
     <h1>Coach Hill and Surrounding Area Restaurants</h1>
-    <input data-bind="searchTerm">
-    <ul data-bind="foreach: restaurants">
+    <input data-bind="textInput: searchTerm">
+    <ul data-bind="foreach: selectedRestaurants">
         <li><span data-bind="text: name"></span></li>
     </ul>
 </div>

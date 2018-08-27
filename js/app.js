@@ -25,8 +25,8 @@ var map;
 function RestaurantListViewModel() {
     let self = this;
 
-    self.searchTerm; //text entered by user for filter list
-    self.restaurants = restaurantList;
+    self.searchTerm = 'tada'; //text entered by user for filter list
+    self.restaurants = ko.observableArray(restaurantList);
     self.filterRestaurants = function() {};
 }
 
@@ -53,10 +53,6 @@ function initMap() {
         center: {lat: 51.052731, lng: -114.196777},
         zoom: 14
     });
-
-    // let infowindow = new google.maps.InfoWindow({
-    //     content: contentString
-    // });
 
     //Add a marker for each restaurant
     restaurantList.forEach(restaurant => {

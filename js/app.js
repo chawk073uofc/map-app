@@ -25,7 +25,7 @@ var map;
 function RestaurantListViewModel() {
     let self = this;
 
-    self.searchTerm = 'tada'; //text entered by user for filter list
+    self.searchTerm = ko.observable(''); //text entered by user for filter list
     self.selectedRestaurants = ko.observableArray(restaurantList);
     self.filterRestaurants = function() {
 console.log("hi");

@@ -11,7 +11,7 @@
 
 <div class="selectedRestaurants">
     <h1>Coach Hill and Surrounding Area Restaurants</h1>
-    <input data-bind="textInput: searchTerm">
+    <input data-bind="textInput: $root.filterRestaurants">
     <ul data-bind="foreach: selectedRestaurants">
         <li><span data-bind="text: name"></span></li>
     </ul>

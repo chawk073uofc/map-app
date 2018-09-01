@@ -27,7 +27,9 @@ function RestaurantListViewModel() {
 
     self.searchTerm = 'tada'; //text entered by user for filter list
     self.selectedRestaurants = ko.observableArray(restaurantList);
-    self.filterRestaurants = function() {};
+    self.filterRestaurants = function() {
+console.log("hi");
+    };
 }
 
 

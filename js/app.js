@@ -96,4 +96,3 @@ function getFourSquarePhotos(restaurantList) {
 
 getFourSquarePhotos(restaurantList);
 ko.applyBindings(new RestaurantListViewModel());
-console.log(RestaurantListViewModel.prototype.searchTerm);

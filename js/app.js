@@ -39,7 +39,9 @@ function RestaurantListViewModel() {
     self.clickRestaurant = function (restaurant) {
         restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
     }
-
+    self.resetList = function () {
+        ko.observableArray(restaurantList);
+    }
 }
 
 

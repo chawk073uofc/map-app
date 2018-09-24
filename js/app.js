@@ -1,5 +1,3 @@
-// TODO: restaurant list filtering with KO
-// TODO:create KO observables:query string and selected restaurant(more than one selected at one time??)
 
 class Restaurant{
     constructor(name, lat, lng, fsID) {
@@ -8,6 +6,7 @@ class Restaurant{
         this.lng = lng;
         this.fsID = fsID;
         this.fsPhoto = null;
+        this.mapMarker = null;
     }
 }
 
@@ -24,12 +23,23 @@ var map;
 
 function RestaurantListViewModel() {
     let self = this;
-
-    self.searchTerm = ko.observable(''); //text entered by user for filter list
     self.selectedRestaurants = ko.observableArray(restaurantList);
-    self.filterRestaurants = function() {
-console.log("hi");
-    };
+
+    // filtering the restaurant list
+    self.searchTerm = ko.observable();
+    self.searchTerm.subscribe(function (term) {
+        const lastCharOfSearchTerm = term[term.length -1].toLowerCase();
+        self.selectedRestaurants().forEach(function (restaurant) {
+            if(restaurant.name.toLowerCase()[term.length -1] != lastCharOfSearchTerm)
+                self.selectedRestaurants.remove(restaurant);
+            });
+    });
+
+    // if the user clicks a restaurant name, the corresponding map marker will bounce
+    self.clickRestaurant = function (restaurant) {
+        restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+
 }
 
 
@@ -58,11 +68,11 @@ function initMap() {
 
     //Add a marker for each restaurant
     restaurantList.forEach(restaurant => {
-        let marker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
+        restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
         let infowindow = new google.maps.InfoWindow();
-        marker.addListener('click', function() {
+        restaurant.mapMarker.addListener('click', function() {
             infowindow.setContent(getInfoWindowContent(restaurant));
-            infowindow.open(map, marker);
+            infowindow.open(map, restaurant.mapMarker);
         });
     });
 }
@@ -85,7 +95,7 @@ function getFourSquarePhotos(restaurantList) {
             cache: false,
             success: function(data) {
                 let response = data.response ? data.response : "";
-                var venue = response.venue ? data.venue : "";
+                let venue = response.venue ? data.venue : "";
                 restaurant.fsPhoto = response.venue.bestPhoto["prefix"] + "height150" +
                     response.venue.bestPhoto["suffix"];
             }

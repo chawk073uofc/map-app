@@ -15,12 +15,13 @@
         <input data-bind="textInput: searchTerm, valueUpdate:'afterkeydown'" autocomplete="off" placeholder="Enter a restaurant name">
     </form>
     <ul data-bind="foreach: selectedRestaurants">
-        <li><span data-bind="text: name"></span></li>
+        <li><span data-bind="text: name, click: $root.clickRestaurant"></span></li>
     </ul>
 </div>
 <div id="map">
 
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 <script src="lib/knockout-3.4.2.js"></script> <!--TODO: use cdn-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBBtd54cfQlsiyDcDkc5tGDnHkZ9W6q8w&callback=initMap" async defer></script>

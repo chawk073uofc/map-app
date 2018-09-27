@@ -68,6 +68,8 @@ function initMap() {
         zoom: 14
     });
 
+    if (map == null)
+        console.log("no map");
     //Add a marker for each restaurant
     restaurantList.forEach(restaurant => {
         restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
@@ -86,6 +88,8 @@ function getFourSquarePhotos(restaurantList) {
     const fsSecret = '&client_secret=OYLZC4ZLIAK2E1MHEJ0C5ETO1Y0EJKCOYRECPLY4RFYD2L42';
     const fsVersionID = '&v=20161507';
 
+let fsErrorMsgAdded = false;
+
     restaurantList.forEach(restaurant => {
         const fsVenueID = restaurant.fsID + '/?';
         const fsURL = fsEndPoint + fsVenueID + fsClientID + fsSecret + fsVersionID;
@@ -100,6 +104,12 @@ function getFourSquarePhotos(restaurantList) {
                 let venue = response.venue ? data.venue : "";
                 restaurant.fsPhoto = response.venue.bestPhoto["prefix"] + "height150" +
                     response.venue.bestPhoto["suffix"];
+            },
+            error: function () {
+                if(!fsErrorMsgAdded) {
+                    $("<p>Unable to load FourSquare photos. Please check your internet connection and try again later.</p>").insertAfter("h1");
+                    fsErrorMsgAdded = true;
+                }
             }
         });
 

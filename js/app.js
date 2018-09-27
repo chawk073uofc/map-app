@@ -46,6 +46,7 @@ function RestaurantListViewModel() {
 
 
 function getInfoWindowContent(restaurant) {
+// Adapted from code found on the Google Maps Platform developer site (https://developers.google.com/maps/documentation/).
     let contentString = '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +

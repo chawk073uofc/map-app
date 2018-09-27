@@ -25,7 +25,7 @@ function RestaurantListViewModel() {
     let self = this;
     self.selectedRestaurants = ko.observableArray(restaurantList);
 
-    // filtering the restaurant list
+    // list filtering
     self.searchTerm = ko.observable();
     self.searchTerm.subscribe(function (term) {
         const lastCharOfSearchTerm = term[term.length -1].toLowerCase();

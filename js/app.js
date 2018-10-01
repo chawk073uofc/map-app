@@ -66,7 +66,17 @@ function getInfoWindowContent(restaurant) {
 
 function initMap() {
 
+    const googleMapsURL = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCBBtd54cfQlsiyDcDkc5tGDnHkZ9W6q8w";
 
+    $.ajax({
+        type: "GET",
+        url: googleMapsURL,
+        cache: false, //remove for production
+
+        error: function () {
+                $("<p>Unable to load Google Maps. Please check your internet connection and try again later.</p>").insertAfter("h1");
+        }
+    });
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 51.052731, lng: -114.196777},

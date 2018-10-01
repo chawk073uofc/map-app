@@ -1,3 +1,4 @@
+initMap();
 
 class Restaurant{
     constructor(name, lat, lng, fsID) {
@@ -64,6 +65,9 @@ function getInfoWindowContent(restaurant) {
 }
 
 function initMap() {
+
+
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 51.052731, lng: -114.196777},
         zoom: 14

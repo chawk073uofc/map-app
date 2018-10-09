@@ -1,4 +1,3 @@
-
 class Restaurant{
     constructor(name, lat, lng, fsID) {
         this.name = name;
@@ -25,7 +24,7 @@ function RestaurantListViewModel() {
     let self = this;
     self.selectedRestaurants = ko.observableArray(restaurantList);
 
-    // list fi
+    // list filtering
     self.searchTerm = ko.observable();
     self.searchTerm.subscribe(function (term) {
         const lastCharOfSearchTerm = term[term.length -1].toLowerCase();
@@ -38,6 +37,8 @@ function RestaurantListViewModel() {
     // if the user clicks a restaurant name, the corresponding map marker will bounce
     self.clickRestaurant = function (restaurant) {
         restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
+        infowindow.open(map, restaurant.mapMarker);
+
     }
     self.resetList = function () {
         ko.observableArray(restaurantList);
@@ -69,17 +70,17 @@ function initMap() {
         zoom: 14
     });
 
-    if (map == null)
-        console.log("no map");
     //Add a marker for each restaurant
     restaurantList.forEach(restaurant => {
         restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
-        let infowindow = new google.maps.InfoWindow();
-        restaurant.mapMarker.addListener('click', function() {
-            infowindow.setContent(getInfoWindowContent(restaurant));
-            infowindow.open(map, restaurant.mapMarker);
-        });
+        restaurant.mapMarker.addListener('click', showRestaurantInfo());
     });
+}
+
+function showRestaurantInfo() {
+    let infoWindow = new google.maps.InfoWindow();
+    infoWindow.setContent(getInfoWindowContent(restaurant));
+    infoWindow.open(map, restaurant.mapMarker);
 }
 
 function getFourSquarePhotos(restaurantList) {

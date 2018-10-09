@@ -6,6 +6,7 @@ class Restaurant{
         this.fsID = fsID;
         this.fsPhoto = null;
         this.mapMarker = null;
+        this.infoWindow= null;
     }
 }
 
@@ -34,10 +35,14 @@ function RestaurantListViewModel() {
             });
     });
 
-    // if the user clicks a restaurant name, the corresponding map marker will bounce
+    // if the user clicks a restaurant name, the corresponding map marker will bounce and the info window will open
     self.clickRestaurant = function (restaurant) {
         restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
-        infowindow.open(map, restaurant.mapMarker);
+        if(restaurant.infoWindow == null) {
+                restaurant.infoWindow = new google.maps.InfoWindow();
+                restaurant.infoWindow.setContent(getInfoWindowContent(restaurant));
+            }
+        restaurant.infoWindow.open(map, restaurant.mapMarker);
 
     };
     self.resetList = function () {
@@ -73,10 +78,12 @@ function initMap() {
     //Add a marker for each restaurant
     restaurantList.forEach(restaurant => {
         restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
-        let infowindow = new google.maps.InfoWindow();
         restaurant.mapMarker.addListener('click', function() {
-            infowindow.setContent(getInfoWindowContent(restaurant));
-            infowindow.open(map, restaurant.mapMarker);
+            if(restaurant.infoWindow == null) {
+                restaurant.infoWindow = new google.maps.InfoWindow();
+                restaurant.infoWindow.setContent(getInfoWindowContent(restaurant));
+            }
+            restaurant.infoWindow.open(map, restaurant.mapMarker);
         });
     });
 }

@@ -73,14 +73,12 @@ function initMap() {
     //Add a marker for each restaurant
     restaurantList.forEach(restaurant => {
         restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
-        restaurant.mapMarker.addListener('click', showRestaurantInfo(restaurant));
+        let infowindow = new google.maps.InfoWindow();
+        restaurant.mapMarker.addListener('click', function() {
+            infowindow.setContent(getInfoWindowContent(restaurant));
+            infowindow.open(map, restaurant.mapMarker);
+        });
     });
-}
-
-function showRestaurantInfo(restaurant) {
-    let infoWindow = new google.maps.InfoWindow();
-    infoWindow.setContent(getInfoWindowContent(restaurant));
-    infoWindow.open(map, restaurant.mapMarker);
 }
 
 function getFourSquarePhotos(restaurantList) {

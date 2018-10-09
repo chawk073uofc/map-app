@@ -39,10 +39,10 @@ function RestaurantListViewModel() {
         restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
         infowindow.open(map, restaurant.mapMarker);
 
-    }
+    };
     self.resetList = function () {
         ko.observableArray(restaurantList);
-    }
+    };
 }
 
 
@@ -73,11 +73,11 @@ function initMap() {
     //Add a marker for each restaurant
     restaurantList.forEach(restaurant => {
         restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
-        restaurant.mapMarker.addListener('click', showRestaurantInfo());
+        restaurant.mapMarker.addListener('click', showRestaurantInfo(restaurant));
     });
 }
 
-function showRestaurantInfo() {
+function showRestaurantInfo(restaurant) {
     let infoWindow = new google.maps.InfoWindow();
     infoWindow.setContent(getInfoWindowContent(restaurant));
     infoWindow.open(map, restaurant.mapMarker);

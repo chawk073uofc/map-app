@@ -13,7 +13,7 @@
     <h1>Coach Hill and Surrounding Area Restaurants</h1>
     <form>
         <input data-bind="textInput: searchTerm, valueUpdate:'afterkeydown'" autocomplete="off" placeholder="Enter a restaurant name">
-        <button data-bind="$root.resetList">clear</button>
+        <button id="clear-button" data-bind="$root.resetList">clear</button>
     </form>
     <ul data-bind="foreach: selectedRestaurants">
         <li><span data-bind="text: name, click: $root.clickRestaurant"></span></li>

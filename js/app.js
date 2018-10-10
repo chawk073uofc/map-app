@@ -24,16 +24,18 @@ var map;
 function RestaurantListViewModel() {
     let self = this;
     self.selectedRestaurants = ko.observableArray(restaurantList);
-
+    let jsArray = self.selectedRestaurants();//debug
     // list filtering
     self.searchTerm = ko.observable();
     self.searchTerm.subscribe(function (term) {
-        if(term.length > 0) {
-            const lastCharOfSearchTerm = term[term.length -1].toLowerCase();
-            self.selectedRestaurants().forEach(function (restaurant) {
-                if(restaurant.name.toLowerCase()[term.length -1] != lastCharOfSearchTerm)
-                    self.selectedRestaurants.remove(restaurant);
-                });
+        if(term.length < 1){
+            $("#clear-button").click();
+        } else {
+            const termIndex = term.length -1; // used for matching
+            const lastCharOfSearchTerm = term[termIndex].toLowerCase();
+            self.selectedRestaurants.remove( function (r) {
+                return lastCharOfSearchTerm != r.name[termIndex].toLowerCase();
+            });
         }
     });
 
@@ -48,7 +50,7 @@ function RestaurantListViewModel() {
 
     };
     self.resetList = function () {
-        ko.observableArray(restaurantList);
+        self.selectedRestaurants = ko.observableArray(restaurantList);
     };
 }
 

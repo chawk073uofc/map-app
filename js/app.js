@@ -28,14 +28,19 @@ function RestaurantListViewModel() {
     // list filtering
     self.searchTerm = ko.observable();
     self.searchTerm.subscribe(function (term) {
-        if(term.length < 1){
-            $("#clear-button").click();
-        } else {
-            const termIndex = term.length -1; // used for matching
+        if (term.length >= 1) {
+            const termIndex = term.length - 1; // used for matching
             const lastCharOfSearchTerm = term[termIndex].toLowerCase();
-            self.selectedRestaurants.remove( function (r) {
+            const unmatchedRestaurants = self.selectedRestaurants.remove(function (r) {
                 return lastCharOfSearchTerm != r.name[termIndex].toLowerCase();
             });
+            unmatchedRestaurants.forEach(r => {
+                r.mapMarker.setVisible(false);
+                if(r.infoWindow)
+                    r.infoWindow.close();
+                });
+        } else {
+            $("#clear-button").click();
         }
     });
 

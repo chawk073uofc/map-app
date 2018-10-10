@@ -104,7 +104,7 @@ function getFourSquarePhotos(restaurantList) {
     const fsSecret = '&client_secret=OYLZC4ZLIAK2E1MHEJ0C5ETO1Y0EJKCOYRECPLY4RFYD2L42';
     const fsVersionID = '&v=20161507';
 
-let fsErrorMsgAdded = false;
+    let fsErrorMsgAdded = false;
 
     restaurantList.forEach(restaurant => {
         const fsVenueID = restaurant.fsID + '/?';

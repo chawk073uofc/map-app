@@ -28,11 +28,13 @@ function RestaurantListViewModel() {
     // list filtering
     self.searchTerm = ko.observable();
     self.searchTerm.subscribe(function (term) {
-        const lastCharOfSearchTerm = term[term.length -1].toLowerCase();
-        self.selectedRestaurants().forEach(function (restaurant) {
-            if(restaurant.name.toLowerCase()[term.length -1] != lastCharOfSearchTerm)
-                self.selectedRestaurants.remove(restaurant);
-            });
+        if(term.length > 0) {
+            const lastCharOfSearchTerm = term[term.length -1].toLowerCase();
+            self.selectedRestaurants().forEach(function (restaurant) {
+                if(restaurant.name.toLowerCase()[term.length -1] != lastCharOfSearchTerm)
+                    self.selectedRestaurants.remove(restaurant);
+                });
+        }
     });
 
     // if the user clicks a restaurant name, the corresponding map marker will bounce and the info window will open

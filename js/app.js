@@ -23,18 +23,26 @@ var map;
 
 //Close all info windows for the given restaurants.
 function hideInfoWindows(restaurants) {
-    if (restaurants.infoWindow)
-        restaurants.infoWindow.close();
+    restaurants.forEach(restaurants => {
+        if (restaurants.infoWindow)
+            restaurants.infoWindow.close();
+    });
+}
+
+//Hide all map markers the given restaurants.
+function hideMapMarkers(restaurants) {
+    restaurants.forEach(restaurants => {
+        restaurants.mapMarker.setVisible(false);
+    });
 }
 
 //Hide all map markers and close all info windows for the given restaurants.
 function hideMapPlaces(restaurants) {
-    restaurants.forEach(restaurants => {
-        restaurants.mapMarker.setVisible(false);
-        hideInfoWindows(restaurants);
-    });
+    hideMapMarkers(restaurants);
+    hideInfoWindows(restaurants);
 }
 
+//The view model for this web app.
 function RestaurantListViewModel() {
     let self = this;
     self.selectedRestaurants = ko.observableArray(restaurantList);
@@ -56,7 +64,7 @@ function RestaurantListViewModel() {
 
     // If the user clicks a restaurant name, the corresponding map marker will bounce and the info window will open
     self.clickRestaurant = function (restaurant) {
-        hideMapPlaces(restaurantList);
+        hideInfoWindows(restaurantList);
         restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
         if(restaurant.infoWindow == null) {
             restaurant.infoWindow = new google.maps.InfoWindow();
@@ -99,6 +107,7 @@ function initMap() {
     restaurantList.forEach(restaurant => {
         restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
         restaurant.mapMarker.addListener('click', function() {
+        hideInfoWindows(restaurantList); //Hide other info windows that might be open.
             if(restaurant.infoWindow == null) {
                 restaurant.infoWindow = new google.maps.InfoWindow();
                 restaurant.infoWindow.setContent(getInfoWindowContent(restaurant));

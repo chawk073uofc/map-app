@@ -105,17 +105,10 @@ function initMap() {
         zoom: 14
     });
 
-    //Add a marker for each restaurant
+    //Add a marker for each restaurant.
     restaurantList.forEach(restaurant => {
         restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
-        restaurant.mapMarker.addListener('click', function() {
-        hideInfoWindows(restaurantList); //Hide other info windows that might be open.
-            if(restaurant.infoWindow == null) {
-                restaurant.infoWindow = new google.maps.InfoWindow();
-                restaurant.infoWindow.setContent(getInfoWindowContent(restaurant));
-            }
-            restaurant.infoWindow.open(map, restaurant.mapMarker);
-        });
+        restaurant.mapMarker.addListener('click', showPlaceInfo(restaurant));
     });
 }
 

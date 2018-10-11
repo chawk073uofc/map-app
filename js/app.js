@@ -42,6 +42,17 @@ function hideMapPlaces(restaurants) {
     hideInfoWindows(restaurants);
 }
 
+//Display info window for the given restaurant when selected. Close all other windows.
+function showPlaceInfo(restaurant) {
+        hideInfoWindows(restaurantList);
+        restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
+        if (restaurant.infoWindow == null) {
+            restaurant.infoWindow = new google.maps.InfoWindow();
+            restaurant.infoWindow.setContent(getInfoWindowContent(restaurant));
+        }
+        restaurant.infoWindow.open(map, restaurant.mapMarker);
+}
+
 //The view model for this web app.
 function RestaurantListViewModel() {
     let self = this;
@@ -63,16 +74,7 @@ function RestaurantListViewModel() {
     });
 
     // If the user clicks a restaurant name, the corresponding map marker will bounce and the info window will open
-    self.clickRestaurant = function (restaurant) {
-        hideInfoWindows(restaurantList);
-        restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
-        if(restaurant.infoWindow == null) {
-            restaurant.infoWindow = new google.maps.InfoWindow();
-            restaurant.infoWindow.setContent(getInfoWindowContent(restaurant));
-        }
-        restaurant.infoWindow.open(map, restaurant.mapMarker);
-
-    };
+    self.clickRestaurant = showPlaceInfo;
     self.resetList = function () {
         self.selectedRestaurants = ko.observableArray(restaurantList);
     };

@@ -21,12 +21,17 @@ let restaurantList = [
 
 var map;
 
+//Close all info windows for the given restaurants.
+function hideInfoWindows(restaurants) {
+    if (restaurants.infoWindow)
+        restaurants.infoWindow.close();
+}
+
 //Hide all map markers and close all info windows for the given restaurants.
-function hideMapPlaces(unmatchedRestaurants) {
-    unmatchedRestaurants.forEach(r => {
-        r.mapMarker.setVisible(false);
-        if (r.infoWindow)
-            r.infoWindow.close();
+function hideMapPlaces(restaurants) {
+    restaurants.forEach(restaurants => {
+        restaurants.mapMarker.setVisible(false);
+        hideInfoWindows(restaurants);
     });
 }
 
@@ -49,8 +54,9 @@ function RestaurantListViewModel() {
         }
     });
 
-    // if the user clicks a restaurant name, the corresponding map marker will bounce and the info window will open
+    // If the user clicks a restaurant name, the corresponding map marker will bounce and the info window will open
     self.clickRestaurant = function (restaurant) {
+        hideMapPlaces(restaurantList);
         restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
         if(restaurant.infoWindow == null) {
             restaurant.infoWindow = new google.maps.InfoWindow();

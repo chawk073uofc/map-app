@@ -21,6 +21,15 @@ let restaurantList = [
 
 var map;
 
+//Hide all map markers and close all info windows for the given restaurants.
+function hideMapPlaces(unmatchedRestaurants) {
+    unmatchedRestaurants.forEach(r => {
+        r.mapMarker.setVisible(false);
+        if (r.infoWindow)
+            r.infoWindow.close();
+    });
+}
+
 function RestaurantListViewModel() {
     let self = this;
     self.selectedRestaurants = ko.observableArray(restaurantList);
@@ -34,11 +43,7 @@ function RestaurantListViewModel() {
             const unmatchedRestaurants = self.selectedRestaurants.remove(function (r) {
                 return lastCharOfSearchTerm != r.name[termIndex].toLowerCase();
             });
-            unmatchedRestaurants.forEach(r => {
-                r.mapMarker.setVisible(false);
-                if(r.infoWindow)
-                    r.infoWindow.close();
-                });
+            hideMapPlaces(unmatchedRestaurants);
         } else {
             $("#clear-button").click();
         }
@@ -48,9 +53,9 @@ function RestaurantListViewModel() {
     self.clickRestaurant = function (restaurant) {
         restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
         if(restaurant.infoWindow == null) {
-                restaurant.infoWindow = new google.maps.InfoWindow();
-                restaurant.infoWindow.setContent(getInfoWindowContent(restaurant));
-            }
+            restaurant.infoWindow = new google.maps.InfoWindow();
+            restaurant.infoWindow.setContent(getInfoWindowContent(restaurant));
+        }
         restaurant.infoWindow.open(map, restaurant.mapMarker);
 
     };

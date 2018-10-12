@@ -108,13 +108,13 @@ function initMap() {
     //Add a marker for each restaurant.
     restaurantList.forEach(restaurant => {
         restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
-        restaurant.mapMarker.addListener('click', showPlaceInfo(restaurant));
+        restaurant.mapMarker.addListener('click', function(){showPlaceInfo(restaurant)});
     });
 }
 
 function getFourSquarePhotos(restaurantList) {
 
-    const fsEndPoint = 'https://api.foursquare.com/v2/venues/';
+    const fsEndPoint = 'https://api.foursquare.com/v2/venues/'; 
     const fsClientID = 'client_id=SFCIUOIIWV2VCYEHDNZJM2YZBDFKB0TIMPUNNL5ILGYLU1AQ';
     const fsSecret = '&client_secret=OYLZC4ZLIAK2E1MHEJ0C5ETO1Y0EJKCOYRECPLY4RFYD2L42';
     const fsVersionID = '&v=20161507';

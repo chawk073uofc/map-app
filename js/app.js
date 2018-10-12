@@ -30,16 +30,16 @@ function stopMapMarkerAnimations(restaurants) {
 
 //Close all info windows for the given restaurants.
 function hideInfoWindows(restaurants) {
-    restaurants.forEach(restaurants => { //TODO singular
-        if (restaurants.infoWindow)
-            restaurants.infoWindow.close();
+    restaurants.forEach(restaurant => {
+        if (restaurant.infoWindow)
+            restaurant.infoWindow.close();
     });
 }
 
 //Hide all map markers the given restaurants.
 function hideMapMarkers(restaurants) {
-    restaurants.forEach(restaurants => {
-        restaurants.mapMarker.setVisible(false);
+    restaurants.forEach(restaurant => {
+        restaurant.mapMarker.setVisible(false);
     });
 }
 

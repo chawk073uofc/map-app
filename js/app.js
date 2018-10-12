@@ -1,3 +1,20 @@
+// Set up the Google Map using the Google Maps API.
+var map;
+
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 51.052731, lng: -114.196777},
+        zoom: 14
+    });
+
+    //Add a marker for each restaurant.
+    restaurantList.forEach(restaurant => {
+        restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
+        restaurant.mapMarker.addListener('click', function(){ showPlaceInfo(restaurant); });
+    });
+}
+
+//Class to encapsulate restaurant data.
 class Restaurant{
     constructor(name, lat, lng, fsID) {
         this.name = name;
@@ -10,6 +27,7 @@ class Restaurant{
     }
 }
 
+//Raw data for the restaurants. Other data will be fetched from the internet using the FourSquare API.
 let restaurantList = [
     new Restaurant('Treasures of Saigon', 51.060816, -114.179903, '4b6cce3cf964a520b3552ce3'),
     new Restaurant('Cafe MoMoKo', 51.063519, -114.194769, '4b6b7cacf964a520e50b2ce3'),
@@ -18,50 +36,7 @@ let restaurantList = [
     new Restaurant('Edo Japan', 51.041403, -114.210483, '4ba690e8f964a520e45e39e3')
     ];
 
-
-var map;
-
-//Stops map markers for the given restaurants from bouncing.
-function stopMapMarkerAnimations(restaurants) {
-    restaurants.forEach(restaurant => {
-        restaurant.mapMarker.setAnimation(null);
-    });
-}
-
-//Close all info windows for the given restaurants.
-function hideInfoWindows(restaurants) {
-    restaurants.forEach(restaurant => {
-        if (restaurant.infoWindow)
-            restaurant.infoWindow.close();
-    });
-}
-
-//Hide all map markers the given restaurants.
-function hideMapMarkers(restaurants) {
-    restaurants.forEach(restaurant => {
-        restaurant.mapMarker.setVisible(false);
-    });
-}
-
-//Hide all map markers and close all info windows for the given restaurants.
-function hideMapPlaces(restaurants) {
-    hideMapMarkers(restaurants);
-    hideInfoWindows(restaurants);
-}
-
-//Display info window for the given restaurant when selected. Close all other windows.
-function showPlaceInfo(restaurant) {
-        hideInfoWindows(restaurantList);
-        stopMapMarkerAnimations(restaurantList);
-        restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
-        if (restaurant.infoWindow == null) {
-            restaurant.infoWindow = new google.maps.InfoWindow();
-            restaurant.infoWindow.setContent(getInfoWindowContent(restaurant));
-        }
-        restaurant.infoWindow.open(map, restaurant.mapMarker);
-}
-
-//The view model for this web app.
+//The view model for this web app. Uses the KnockoutJS framework.
 function RestaurantListViewModel() {
     let self = this;
     self.selectedRestaurants = ko.observableArray(restaurantList);
@@ -88,9 +63,13 @@ function RestaurantListViewModel() {
     };
 }
 
+//Apply the Knockout.js bindings.
+ko.applyBindings(new RestaurantListViewModel());
 
-function getInfoWindowContent(restaurant) {
+
+//Build an info window displaying the restaurant's name and a photo from Four Square.
 // Adapted from code found on the Google Maps Platform developer site (https://developers.google.com/maps/documentation/).
+function getInfoWindowContent(restaurant) {
     let contentString = '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +
@@ -107,18 +86,9 @@ function getInfoWindowContent(restaurant) {
     return contentString;
 }
 
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 51.052731, lng: -114.196777},
-        zoom: 14
-    });
+//Get restaurant photos using the Four Square API.
 
-    //Add a marker for each restaurant.
-    restaurantList.forEach(restaurant => {
-        restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
-        restaurant.mapMarker.addListener('click', function(){ showPlaceInfo(restaurant); });
-    });
-}
+getFourSquarePhotos(restaurantList);
 
 function getFourSquarePhotos(restaurantList) {
 
@@ -155,5 +125,47 @@ function getFourSquarePhotos(restaurantList) {
     });
 }
 
-getFourSquarePhotos(restaurantList);
-ko.applyBindings(new RestaurantListViewModel());
+/*
+HELPER FUNCTIONS FOR MANIPULATING THE INFORMATION SHOWN ABOUT RESTAURANTS
+*************************************************************************
+*/
+
+//Display info window for the given restaurant when selected. Close all other windows.
+function showPlaceInfo(restaurant) {
+    hideInfoWindows(restaurantList);
+    stopMapMarkerAnimations(restaurantList);
+    restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
+    if (restaurant.infoWindow == null) {
+        restaurant.infoWindow = new google.maps.InfoWindow();
+        restaurant.infoWindow.setContent(getInfoWindowContent(restaurant));
+    }
+    restaurant.infoWindow.open(map, restaurant.mapMarker);
+}
+
+//Hide all map markers and close all info windows for the given restaurants.
+function hideMapPlaces(restaurants) {
+    hideMapMarkers(restaurants);
+    hideInfoWindows(restaurants);
+}
+
+//Close all info windows for the given restaurants.
+function hideInfoWindows(restaurants) {
+    restaurants.forEach(restaurant => {
+        if (restaurant.infoWindow)
+            restaurant.infoWindow.close();
+    });
+}
+
+//Stops map markers for the given restaurants from bouncing.
+function stopMapMarkerAnimations(restaurants) {
+    restaurants.forEach(restaurant => {
+        restaurant.mapMarker.setAnimation(null);
+    });
+}
+
+//Hide all map markers the given restaurants.
+function hideMapMarkers(restaurants) {
+    restaurants.forEach(restaurant => {
+        restaurant.mapMarker.setVisible(false);
+    });
+}

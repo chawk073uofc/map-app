@@ -21,9 +21,16 @@ let restaurantList = [
 
 var map;
 
+//Stops map markers for the given restaurants from bouncing.
+function stopMapMarkerAnimations(restaurants) {
+    restaurants.forEach(restaurant => {
+        restaurant.mapMarker.setAnimation(null);
+    });
+}
+
 //Close all info windows for the given restaurants.
 function hideInfoWindows(restaurants) {
-    restaurants.forEach(restaurants => {
+    restaurants.forEach(restaurants => { //TODO singular
         if (restaurants.infoWindow)
             restaurants.infoWindow.close();
     });
@@ -45,6 +52,7 @@ function hideMapPlaces(restaurants) {
 //Display info window for the given restaurant when selected. Close all other windows.
 function showPlaceInfo(restaurant) {
         hideInfoWindows(restaurantList);
+        stopMapMarkerAnimations(restaurantList);
         restaurant.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
         if (restaurant.infoWindow == null) {
             restaurant.infoWindow = new google.maps.InfoWindow();
@@ -108,13 +116,13 @@ function initMap() {
     //Add a marker for each restaurant.
     restaurantList.forEach(restaurant => {
         restaurant.mapMarker = new google.maps.Marker({position: {lat: restaurant.lat, lng: restaurant.lng}, map: map});
-        restaurant.mapMarker.addListener('click', function(){showPlaceInfo(restaurant)});
+        restaurant.mapMarker.addListener('click', function(){ showPlaceInfo(restaurant); });
     });
 }
 
 function getFourSquarePhotos(restaurantList) {
 
-    const fsEndPoint = 'https://api.foursquare.com/v2/venues/'; 
+    const fsEndPoint = 'https://api.foursquare.com/v2/venues/';
     const fsClientID = 'client_id=SFCIUOIIWV2VCYEHDNZJM2YZBDFKB0TIMPUNNL5ILGYLU1AQ';
     const fsSecret = '&client_secret=OYLZC4ZLIAK2E1MHEJ0C5ETO1Y0EJKCOYRECPLY4RFYD2L42';
     const fsVersionID = '&v=20161507';
